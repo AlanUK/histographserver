@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.histograph.server.histographserver;
+package com.histograph.server.controllers;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
