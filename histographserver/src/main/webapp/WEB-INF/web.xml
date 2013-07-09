@@ -44,6 +44,14 @@
         <servlet-name>GetHistographImagesServlet</servlet-name>
         <url-pattern>/gethistographimages</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>com.histograph.server.controllers.TestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestServlet</servlet-name>
+        <url-pattern>/testservlet</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>welcome.html</welcome-file>
     </welcome-file-list>
