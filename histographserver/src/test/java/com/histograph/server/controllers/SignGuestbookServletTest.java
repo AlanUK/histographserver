@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.histograph.server.histographserver;
+package com.histograph.server.controllers;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;

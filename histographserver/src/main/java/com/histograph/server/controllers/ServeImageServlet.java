@@ -10,6 +10,11 @@ import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
+/**
+ * 
+ * @author alandonohoe
+ * Just for testing all the mechanics of the images and datastore work
+ */
 public class ServeImageServlet extends HttpServlet{
 
 	/**

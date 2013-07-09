@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import org.junit.Test;
 
 import com.histograph.server.controllers.NewUserServlet;
+import com.histograph.server.utils.PasswordHash;
 
-import utils.PasswordHash;
 
 public class PasswordHashTest {
 	

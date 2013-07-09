@@ -36,6 +36,14 @@
         <servlet-name>ListUsersServlet</servlet-name>
         <url-pattern>/listusersservlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GetHistographImagesServlet</servlet-name>
+        <servlet-class>com.histograph.server.controllers.GetHistographImagesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetHistographImagesServlet</servlet-name>
+        <url-pattern>/gethistographimages</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>welcome.html</welcome-file>
     </welcome-file-list>

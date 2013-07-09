@@ -2,14 +2,17 @@ package com.histograph.server.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import com.histograph.server.entities.Image;
 import com.histograph.server.persistence.ImagePersistence;
+import com.histograph.server.user.Location;
 
 /**
  * 
@@ -34,13 +37,40 @@ public class GetHistographImagesServlet extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getLogger(GetHistographImagesServlet.class.getName());
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
 		
-		 resp.setContentType("image/jpeg");
+		// See: http://www.knowledgetip.com/index.php/home/software-development/1-java/16-ajaxservlet
+		// 	for ajax servlet...
+		
+		resp.setContentType("text/html");
+		 //resp.setContentType("image/jpeg");
+		
+		//TODO: some error-handling...
+		log.info("path = " + req.getQueryString());
+		
+		String longitude =  req.getParameter("long");
+		String latitude = req.getParameter("lat");
+		String dir = req.getParameter("dir");
+		String accuracy =  req.getParameter("accuracy");
+		
+		log.info("longitude =" +longitude );
+		log.info("latitude = " + latitude);
+		log.info("dir = " + dir);
+		log.info("accuracy = " + accuracy);
+		
+		Double longDouble = Double.parseDouble(longitude);
+		Double latDouble  = Double.parseDouble(latitude);
+		Integer dirInteger = Integer.parseInt(dir);
+		
+		//String 
+		Location location = new Location(longDouble, latDouble, dirInteger);
+		
+
 	      resp.getWriter().println("Hello World ");
 	      
 	      ImagePersistence imgPersistence = new ImagePersistence();

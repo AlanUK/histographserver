@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.histograph.server.entities.User;
 import com.histograph.server.persistence.UserPersistence;
+import com.histograph.server.utils.PasswordHash;
 
-import utils.PasswordHash;
 
 public class NewUserServlet extends HttpServlet {
 

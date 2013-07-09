@@ -1,4 +1,4 @@
-package utils;
+package com.histograph.server.utils;
 
 import java.security.SecureRandom;
 import javax.crypto.spec.PBEKeySpec;
