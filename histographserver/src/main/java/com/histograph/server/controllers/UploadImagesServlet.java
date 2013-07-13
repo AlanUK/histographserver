@@ -25,10 +25,23 @@ import com.histograph.server.persistence.ImagePersistence;
 /**
  * 
  * @author alandonohoe
- * Request - Post with new image, taken by current user and list of ids of images in datastore, that user has
- * selected to be in histograph.
- * Response - URL of new composite histograph image, or... the image itself? - depending on mechanics
- * of subsequent use case: ie: how to share to FB/Twitter/ Sincerely API.
+ * 
+ * 
+ * - New:
+ * This is the target servlet pointed to by:
+ * 
+ * 1 upload.jsp: Where user's submit historical images, via from in webpage:
+ * 
+ * Persists img uploaded by user (via the upload.jsp form)
+ * to GAE blobstore, and a new Image instance into the GAE datastore
+ * with the blobKey ref to img saved in that Image instance
+ * 
+ * 2. from Phone:
+ * use case - user has just taken img and this is sent from phone to be persisted
+ * 
+ * 3. from Phone:
+ * User has made a histograph, and this is sent back to server to be persisted.
+ * 
  *
  */
 public class UploadImagesServlet extends HttpServlet{
@@ -45,10 +58,22 @@ public class UploadImagesServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		log.info("In UploadImagesServlet::doPost()");
 
 		Image image = new Image();
 		ImagePersistence imagePersistence = new ImagePersistence();
+		
+		// handle type of use case:
+		String useCase = req.getParameter("useCase");
+		log.info("useCase = " + useCase);
+		
+		
 
+		
+		//1: user / institution, submitting image via website:
+
+		
 		//1. Get user data & GPS and direction info:
 		String year = req.getParameter("Year");
 		String latitude = req.getParameter("Lat");
@@ -63,7 +88,7 @@ public class UploadImagesServlet extends HttpServlet{
 		log.info("Direction = " + direction);
 
 
-		//2. get image..
+		//2. get image...
 
 		BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
@@ -93,8 +118,6 @@ public class UploadImagesServlet extends HttpServlet{
 			resp.sendRedirect("/upload.jsp");
 		}
 
-
-	
 
 
 		//		resp.setContentType("text/plain");

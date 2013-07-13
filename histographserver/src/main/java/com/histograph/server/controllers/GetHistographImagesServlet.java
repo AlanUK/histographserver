@@ -39,6 +39,16 @@ public class GetHistographImagesServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private static Logger log = Logger.getLogger(GetHistographImagesServlet.class.getName());
 
+	
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(req, resp);
+	}
+
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -48,6 +58,7 @@ public class GetHistographImagesServlet extends HttpServlet{
 		// 	for ajax servlet...
 		
 		resp.setContentType("text/html");
+		resp.setHeader("Access-Control-Allow-Origin","*");
 		 //resp.setContentType("image/jpeg");
 		
 		//TODO: some error-handling...
