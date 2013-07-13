@@ -33,6 +33,17 @@ public class UploadImgFromPhone extends HttpServlet {
 			.getName());
 
 	private final String USER_AGENT = "Mozilla/5.0"; // ?? necessary??? why ??
+	
+	
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doPost(req, resp);
+	}
+
+
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
