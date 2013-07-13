@@ -32,7 +32,7 @@ public class UploadImgFromPhone extends HttpServlet {
 	private static Logger log = Logger.getLogger(UploadImgFromPhone.class
 			.getName());
 
-	private final String USER_AGENT = "Mozilla/5.0"; // ?? necessary??? why ??
+	//private final String USER_AGENT = "Mozilla/5.0"; // ?? necessary??? why ??
 	
 	
 
@@ -49,9 +49,9 @@ public class UploadImgFromPhone extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		String blobStoreURL, paramName, paramValue;
+		String blobStoreURL, paramName, paramValue, headers, urlParameters = "";
 		URL blobURL;
-		String urlParameters = "";// "useCase=Case123&imgUpload=HistoGraph-Logo-with-Tag.jpg&Description=DESCRIBEsomthing&UserNo=1&Direction=123321&Long=123&Lat=432&Year=543";
+		//String ;// "useCase=Case123&imgUpload=HistoGraph-Logo-with-Tag.jpg&Description=DESCRIBEsomthing&UserNo=1&Direction=123321&Long=123&Lat=432&Year=543";
 
 		// User has posted img from phone, there will the img, phone unique ID,
 		// location details
@@ -62,9 +62,7 @@ public class UploadImgFromPhone extends HttpServlet {
 		blobStoreURL = blobstoreService.createUploadUrl("/uploadimages"); 
 
 		log.info("blobStoreURL = " + blobStoreURL);
-
-		// now get the img thats been uploaded.....
-
+		
 		// and all relevant parameters & assoc values:
 		// See: http://www.java-programming.info/tutorial/pdf/csajsp2/03-Form-Data.pdf
 		Enumeration<String> paramNames = req.getParameterNames();
@@ -83,42 +81,86 @@ public class UploadImgFromPhone extends HttpServlet {
 			urlParameters += paramValue;
 		}
 		
-		log.info("urlParameters = "+ urlParameters);
+		log.info("urlParameters = " + urlParameters);
 
-		// and post it to the blobstore:
+		// get header's content....
+		Enumeration e = req.getHeaderNames();
 
-		blobURL = new URL(blobStoreURL);
-		HttpURLConnection con = (HttpURLConnection) blobURL.openConnection();
+		log.info("Headers");
 
-		// add request header
-		con.setRequestMethod("POST");
-		con.setRequestProperty("User-Agent", USER_AGENT);
-		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-		con.setRequestProperty("ENCTYPE", "multipart/form-data");
+		while (e.hasMoreElements()) {
+			headers = (String) e.nextElement();
+			if (headers != null) {
 
-		// Send post request
-		con.setDoOutput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes(urlParameters);
-		wr.flush();
-		wr.close();
+				log.info(headers);
+				log.info(req.getHeader(headers));
 
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + blobStoreURL);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
+			}
 		}
-		in.close();
+		
+		// now skip all the stuff below and just redirect with new url:
+		
+		resp.sendRedirect(blobStoreURL);
+		
 
-		// set resp.responsecode = responseCode???
+//		// now get the img thats been uploaded.....
+//		// see: http://stackoverflow.com/questions/2422468/how-to-upload-files-to-server-using-jsp-servlet/2424824#2424824
+//		
+//
+//		// and all relevant parameters & assoc values:
+//		// See: http://www.java-programming.info/tutorial/pdf/csajsp2/03-Form-Data.pdf
+//		Enumeration<String> paramNames = req.getParameterNames();
+//		while (paramNames.hasMoreElements()) {
+//
+//			// check that we're not at the first param, if not - then need to
+//			// add & to the string
+//			if (!urlParameters.isEmpty())
+//				urlParameters += "&";
+//
+//			paramName = (String) paramNames.nextElement();
+//			urlParameters += paramName;
+//			urlParameters += "=";
+//
+//			paramValue = req.getParameter(paramName);
+//			urlParameters += paramValue;
+//		}
+//		
+//		log.info("urlParameters = "+ urlParameters);
+//
+//		// and post it to the blobstore:
+//
+//		blobURL = new URL(blobStoreURL);
+//		HttpURLConnection con = (HttpURLConnection) blobURL.openConnection();
+//
+//		// add request header
+//		con.setRequestMethod("POST");
+//		//con.setRequestProperty("User-Agent", USER_AGENT);
+//		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+//		con.setRequestProperty("ENCTYPE", "multipart/form-data");
+//
+//		// Send post request
+//		con.setDoOutput(true);
+//		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+//		wr.writeBytes(urlParameters);
+//		wr.flush();
+//		wr.close();
+//
+//		int responseCode = con.getResponseCode();
+//		log.info("\nSending 'POST' request to URL : " + blobStoreURL);
+//		log.info("Post parameters : " + urlParameters);
+//		log.info("Response Code : " + responseCode);
+//
+//		BufferedReader in = new BufferedReader(new InputStreamReader(
+//				con.getInputStream()));
+//		String inputLine;
+//		StringBuffer response = new StringBuffer();
+//
+//		while ((inputLine = in.readLine()) != null) {
+//			response.append(inputLine);
+//		}
+//		in.close();
+//
+//		// set resp.responsecode = responseCode???
 
 	}
 
