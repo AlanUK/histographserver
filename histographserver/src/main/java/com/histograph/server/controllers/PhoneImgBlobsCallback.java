@@ -47,10 +47,10 @@ public class PhoneImgBlobsCallback extends HttpServlet{
 	
 		log.info("Entering PhoneImgBlobsCallback::doPost");
 		
-		String paramName, paramValue,keyString, urlParameters = "";
-		List<BlobKey> keys;
-		Map<String, List<BlobKey>> blobs;
-		BlobstoreService blobstoreService;
+		String paramName, paramValue,keyString, imgFromPhoneFileName, urlParameters = "";
+		List<BlobKey> keys = null;
+		Map<String, List<BlobKey>> blobs= null;
+		BlobstoreService blobstoreService= null;
 		Image image = new Image();
 		ImagePersistence imagePersistence = new ImagePersistence();
 		
@@ -72,16 +72,37 @@ public class PhoneImgBlobsCallback extends HttpServlet{
 		}
 
 		log.info("urlParameters = " + urlParameters);
+		
+		// try accessing the blobkey via value (which is the file name) assoc with "imgUpload" param
+		imgFromPhoneFileName = req.getParameter("imgUpload");
 
 		try {
 
 			// Get image's blobkey from blobstore
 			blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+			if(null == blobstoreService)
+				log.warning("null == blobstoreService");
+			
 			blobs = blobstoreService.getUploads(req);
-			keys = blobs.get("imgUpload"); // this is set in the JS script, as the param with a value = img file name.
+			if(null == blobs)
+				log.warning("null == blobs");
+			
+			log.info("blobs size = " + Integer.toString(blobs.size()));
+			
+			//ORIGINALLY:
+			//keys = blobs.get("imgUpload"); // this is set in the JS script, as the param with a value = img file name.
+			//NEW:
+			keys = blobs.get(imgFromPhoneFileName);
+			if(null == keys)
+				log.warning("null == keys");
+			
+			log.info("keys size = " + Integer.toString(keys.size()));
+			
 			keyString = keys.get(0).getKeyString();
 
 			log.info("keyString = " + keyString);
+			
+			
 		} catch (Exception e) {
 			log.warning(e.getMessage());
 		}
