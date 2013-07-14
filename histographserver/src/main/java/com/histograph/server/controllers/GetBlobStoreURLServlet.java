@@ -12,7 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-
+/**
+ * 
+ * @author alandonohoe
+ * This is solely a wrapper for GAE's blobstore service: 'createUploadUrl' method
+ * Returns a one time URL for posting blobs (ie: images) to the GAE blobstore
+ * And sets the call back function as phoneImgBlobsCallback - this is called 
+ * once the blobstore has persisted img and will provide the img's blobkey
+ * to the callback function for adding to the datastore Image entry.
+ */
 public class GetBlobStoreURLServlet extends HttpServlet {
 
 	/**
@@ -22,6 +30,8 @@ public class GetBlobStoreURLServlet extends HttpServlet {
 	
 	private static Logger log = Logger.getLogger(GetBlobStoreURLServlet.class
 			.getName());
+	
+	private static final String CALLBACKFUNCTION = "/phoneImgBlobsCallback";
 
 
 	@Override
@@ -34,20 +44,17 @@ public class GetBlobStoreURLServlet extends HttpServlet {
 		
 		try{
 			// creates new blobstore url with  callback servlet -  uploadimages - to be called when asynx upload of img is complete
-			blobstoreURL = blobstoreService.createUploadUrl("/uploadimages"); 
+			blobstoreURL = blobstoreService.createUploadUrl(CALLBACKFUNCTION); 
 		
 		}catch(Exception e){
 			log.warning(e.getMessage());
-			resp.sendError(resp.SC_GONE);
+			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 
 		log.info("blobstoreURL = " + blobstoreURL);
 
 		resp.getWriter().append(blobstoreURL);
-		
-		
+
 	}
 	
-	
-
 }

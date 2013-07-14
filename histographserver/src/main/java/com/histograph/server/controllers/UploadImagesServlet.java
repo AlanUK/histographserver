@@ -64,9 +64,6 @@ public class UploadImagesServlet extends HttpServlet{
 		Image image = new Image();
 		ImagePersistence imagePersistence = new ImagePersistence();
 		
-		// handle type of use case:
-		String useCase = req.getParameter("useCase");
-		log.info("useCase = " + useCase);
 		
 		
 

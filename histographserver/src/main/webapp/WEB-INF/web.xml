@@ -52,14 +52,6 @@
         <servlet-name>TestServlet</servlet-name>
         <url-pattern>/testservlet</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>UploadImgFromPhone</servlet-name>
-        <servlet-class>com.histograph.server.controllers.UploadImgFromPhone</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UploadImgFromPhone</servlet-name>
-        <url-pattern>/uploadimgfromphone</url-pattern>
-    </servlet-mapping>
      <servlet>
         <servlet-name>GetBlobStoreURLServlet</servlet-name>
         <servlet-class>com.histograph.server.controllers.GetBlobStoreURLServlet</servlet-class>
@@ -67,6 +59,14 @@
     <servlet-mapping>
         <servlet-name>GetBlobStoreURLServlet</servlet-name>
         <url-pattern>/getblobstoreurl</url-pattern>
+    </servlet-mapping>
+         <servlet>
+        <servlet-name>PhoneImgBlobsCallback</servlet-name>
+        <servlet-class>com.histograph.server.controllers.PhoneImgBlobsCallback</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PhoneImgBlobsCallback</servlet-name>
+        <url-pattern>/phoneimgblobscallback</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>welcome.html</welcome-file>
