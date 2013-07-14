@@ -31,7 +31,7 @@ public class GetBlobStoreURLServlet extends HttpServlet {
 	private static Logger log = Logger.getLogger(GetBlobStoreURLServlet.class
 			.getName());
 	
-	private static final String CALLBACKFUNCTION = "/phoneImgBlobsCallback";
+	private static final String CALLBACKFUNCTION = "/phoneimgblobscallback";
 
 
 	@Override
