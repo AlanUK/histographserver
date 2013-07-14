@@ -54,15 +54,6 @@ public class PhoneImgBlobsCallback extends HttpServlet{
 		Image image = new Image();
 		ImagePersistence imagePersistence = new ImagePersistence();
 		
-		//Get image's blobkey from blobstore
-		blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-		blobs = blobstoreService.getUploads(req);
-		keys = blobs.get("imgUpload"); // this is set in the JS script, as the param with a value = img file name.
-		keyString = keys.get(0).getKeyString();
-		
-		log.info("keyString = " + keyString);
-		
-		
 		//Check params
 		Enumeration<String> paramNames = req.getParameterNames();
 		while (paramNames.hasMoreElements()) {
@@ -79,8 +70,24 @@ public class PhoneImgBlobsCallback extends HttpServlet{
 			paramValue = req.getParameter(paramName);
 			urlParameters += paramValue;
 		}
-		
+
 		log.info("urlParameters = " + urlParameters);
+
+		try {
+
+			// Get image's blobkey from blobstore
+			blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+			blobs = blobstoreService.getUploads(req);
+			keys = blobs.get("imgUpload"); // this is set in the JS script, as the param with a value = img file name.
+			keyString = keys.get(0).getKeyString();
+
+			log.info("keyString = " + keyString);
+		} catch (Exception e) {
+			log.warning(e.getMessage());
+		}
+		
+		
+		
 		
 
 		//TODO:
