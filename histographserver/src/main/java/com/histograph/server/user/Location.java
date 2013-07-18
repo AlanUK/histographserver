@@ -2,6 +2,7 @@ package com.histograph.server.user;
 
 import java.util.logging.Logger;
 
+//TODO: don't know if this serves any use.....????
 /** 
  * 
  * @author alandonohoe

@@ -1,5 +1,6 @@
 package com.histograph.server.persistence;
 
+
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -80,5 +81,41 @@ public class UserPersistence {
 		}
 		
 		return users;
+	}
+
+	public User getUserByDeviceID(String uniqueDeviceID) throws Exception {
+		
+		log.entering("UserPersistence", "getUserByDeviceID(...)");
+		
+		User user = null;
+		
+		/*
+		 * 			result = (Integer)mgr.createQuery("SELECT u.links_id FROM Link u WHERE u.target_id = :targetID AND u.source_id = :sourceID")
+					.setParameter("sourceID",  sourceID)
+					.setParameter("targetID",  targetID)
+					.getSingleResult();
+
+		 */
+		
+		EntityManagerFactory emf = PersistenceManager.getInstance().getEntityManagerFactory();
+		EntityManager mgr = emf.createEntityManager();
+		
+		try{
+			user = (User) mgr.createQuery("SELECT u FROM User u WHERE u.uniqueDeviceID = :uniqueDeviceID")
+					.setParameter("uniqueDeviceID", uniqueDeviceID)
+					.getSingleResult();
+			
+		}catch(Exception e){
+			
+			throw(e); //handle upstream...
+			//log.severe("Exception thrown in UserPersistence::getAllUsers. " + e.getMessage());
+			
+		}finally{
+			
+			mgr.close();
+		}
+		
+		return user; 
+		
 	}
 }

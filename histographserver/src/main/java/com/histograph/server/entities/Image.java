@@ -33,6 +33,7 @@ public class Image implements Serializable{
 	private double longitude;
 	private double direction;
 	private String description;
+	private boolean histograph;
 
 	public String getDescription() {
 		return description;
@@ -83,5 +84,14 @@ public class Image implements Serializable{
 	public void setDirection(double direction) {
 		this.direction = direction;
 	}
-
+	public boolean isHistograph() {
+		return histograph;
+	}
+	public void setHistograph(boolean histograph) {
+		this.histograph = histograph;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
+	
 }

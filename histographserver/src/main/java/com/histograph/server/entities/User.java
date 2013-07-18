@@ -24,6 +24,7 @@ public class User implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	boolean institution;
+	String uniqueDeviceID;
 	String copyrightInfo;
 	String name;
 	String password;
@@ -58,5 +59,11 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	public String getUniqueDeviceID() {
+		return uniqueDeviceID;
+	}
+	public void setUniqueDeviceID(String uniqueDeviceID) {
+		this.uniqueDeviceID = uniqueDeviceID;
+	}
+	
 }
